@@ -1,0 +1,11 @@
+BA:The Boeing Company
+FMCC:Freddie Mac
+NFLX:Netflix
+WORK:Slack Technologies, Inc.
+AMZN:Amazon.com, Inc.
+HOG:Harley Davidson, Inc.
+DIS:The Walt Disney Company
+DELL:Dell Technologies Inc.
+NKE:NIKE, Inc.
+SNE:Sony Corporation
+
