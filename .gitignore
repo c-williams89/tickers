@@ -11,3 +11,6 @@ tickers
 
 # Ignore indent Files
 *.c~
+
+# Ignore scratch
+scratch.c
