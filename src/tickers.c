@@ -15,9 +15,11 @@ void read_parse_file();
 
 void create_companies ();
 
+void print_ticker (company co_list[]);
+
 int main(void)
 {
-        company co_list[MAX_NO_CO];
+        company co_list[MAX_NO_CO] = { 0 };
         char file[] = "./tickers.txt";
         long file_size = get_file_size(file);
         printf("File size: %ld\n", file_size);
@@ -31,10 +33,14 @@ int main(void)
         while (fgets(curr_co, file_size, fp))
         {
                 curr_co[strlen(curr_co) - 1] = '\0';
+                printf("%s\n", curr_co);
                 create_companies(curr_co, &co_list[i]);
                 i++;
 
         }
+
+        print_ticker(co_list);
+
         // read_parse_file();
 }
 
@@ -42,7 +48,7 @@ long get_file_size(char file[])
 {
 
 	FILE *fp = fopen(file, "r");
-	fseek(fp, (long)0, SEEK_END);
+	fseek(fp, (long) 0, SEEK_END);
 	long file_size = ftell(fp);
 	fclose(fp);
 	return file_size;
@@ -81,5 +87,19 @@ void read_parse_file()
                 printf("%s\n", curr_co);
                 i++;
 
+        }
+}
+
+void print_ticker (company co_list[]) {
+        
+        char symbol[MAX_SYM_SIZE];
+	printf("Enter a symbol to search by: ");
+	scanf("%s", symbol);
+        printf("%s\n\n", symbol);
+
+        for (int i = 0; i < MAX_NO_CO; ++i) {
+                if ((strncmp(co_list[i].symbol, symbol, sizeof(symbol))== 0 )) {
+                        printf("%s\n", co_list[i].co_name);
+                }
         }
 }
