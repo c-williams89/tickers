@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <ctype.h>
+#include <stdio_ext.h>
 
 enum { MAX_CO_SIZE = 100, MAX_SYM_SIZE = 5, MAX_NO_CO = 10 };
 
@@ -105,6 +106,7 @@ void print_ticker(company co_list[])
 				    ("No company found with provided symbol\n");
 			}
 		}
+                __fpurge(stdin);
 	};
 
 }
