@@ -16,6 +16,8 @@ void create_companies();
 
 void print_ticker(company co_list[]);
 
+void write_to (char *co_to_print);
+
 int main(void)
 {
 	company co_list[MAX_NO_CO] = { 0 };
@@ -35,8 +37,6 @@ int main(void)
         fclose(fp);
 
 	print_ticker(co_list);
-
-	// read_parse_file();
 }
 
 long get_file_size(char file[])
@@ -61,7 +61,8 @@ void create_companies(char *curr_co, company * co_list)
 void print_ticker(company co_list[])
 {
 	int nl_loc = 0;
-	char symbol[MAX_SYM_SIZE] = { 0 };
+	char symbol[MAX_SYM_SIZE] = {0};
+        char co_to_print[MAX_CO_SIZE] = {0};
         bool co_found;
 
 	printf("Enter a symbol to search by: ");
@@ -73,12 +74,26 @@ void print_ticker(company co_list[])
 	for (int i = 0; i < MAX_NO_CO; ++i) {
                 co_found = false;
 		if ((strncmp(co_list[i].symbol, symbol, sizeof(symbol)) == 0)) {
-			printf("%s: %s\n\n", co_list[i].symbol, co_list[i].co_name);
+                        snprintf(co_to_print, MAX_CO_SIZE, "%s: %s\n", co_list[i].symbol, co_list[i].co_name);
+                        // strncpy(co_to_print, fprintf("%s: %s\n\n", co_list[i].symbol, co_list[i].co_name), MAX_CO_SIZE);
+                        // strncpy(co_to_print, co_list[i].symbol, MAX_SYM_SIZE);
+                        // strncat(co_to_print, ": ", 3);
+                        // strncat(co_to_print, co_list[i].co_name, MAX_CO_SIZE);
+                        // strncat(co_to_print, "\n", 2);
+                        printf("%s\n", co_to_print);
                         co_found = true;
+                        write_to(co_to_print);
                         break;
 		}
 	}
         if (!co_found) {
                 printf("No company found with provided symbol\n");
         }
+}
+
+void write_to (char *co_to_print) {
+        char output_file[] = "./docs/search_results";
+        FILE *fp = fopen(output_file, "a");
+        fwrite(co_to_print, sizeof(char), strlen(co_to_print), fp);
+        fclose(fp);
 }

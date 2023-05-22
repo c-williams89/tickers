@@ -14,3 +14,6 @@ tickers
 
 # Ignore scratch
 scratch.c
+
+# Ignore search_results
+docs/search_results
