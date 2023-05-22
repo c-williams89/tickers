@@ -17,7 +17,7 @@ BIN := ticker
 
 all: $(BIN)
 
-run: $(BIN)
+money: $(BIN)
 	./$(BIN)
 
 clean: 
