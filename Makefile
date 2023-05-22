@@ -9,6 +9,7 @@ CFLAGS += -Wfloat-equal -Waggregate-return -Winline
 SRC_DIR := src
 OBJ_DIR := obj
 DOCS_DIR := docs
+DATA_DIR := data
 
 SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
@@ -23,7 +24,7 @@ money: $(BIN)
 
 clean: 
 	@rm -rf $(BIN) $(OBJ_DIR)
-	@rm $(DOCS_DIR)/search_results
+	@rm $(DATA_DIR)/search_results
 
 # creates object files from .c files
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

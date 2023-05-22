@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <ctype.h>
+// #include <ctype.h>
 #include <stdio_ext.h>
 
 enum { MAX_CO_SIZE = 100, MAX_SYM_SIZE = 5, MAX_NO_CO = 10 };
@@ -24,7 +24,7 @@ int main(void)
 {
         system("clear");
 	company co_list[MAX_NO_CO] = { 0 };
-	char file[] = "./tickers.txt";
+	char file[] = "./data/tickers.txt";
 	long file_size = get_file_size(file);
 
 	FILE *fp;
@@ -117,7 +117,7 @@ void print_ticker(company co_list[])
 
 void write_to(char *co_to_print)
 {
-	char output_file[] = "./docs/search_results";
+	char output_file[] = "./data/search_results";
 	FILE *fp = fopen(output_file, "a");
 	fwrite(co_to_print, sizeof(char), strlen(co_to_print), fp);
 	fclose(fp);
