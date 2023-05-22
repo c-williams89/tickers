@@ -13,7 +13,7 @@ SRCS := $(wildcard $(SRC_DIR)/*.c)
 OBJS := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRCS))
 
 # executable
-BIN := coins
+BIN := ticker
 
 all: $(BIN)
 
