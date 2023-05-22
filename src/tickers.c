@@ -22,6 +22,7 @@ void write_to(char *co_to_print);
 
 int main(void)
 {
+        system("clear");
 	company co_list[MAX_NO_CO] = { 0 };
 	char file[] = "./tickers.txt";
 	long file_size = get_file_size(file);
@@ -74,15 +75,19 @@ void print_ticker(company co_list[])
 	char symbol[MAX_SYM_SIZE] = { 0 };
 	char co_to_print[MAX_CO_SIZE] = { 0 };
 	bool co_found;
-	int j = 0;
 	while (true) {
-		printf("Enter a symbol to search by: ");
+		printf("Enter a symbol to search or 'Q' to quit: ");
 		fgets(symbol, MAX_SYM_SIZE, stdin);
 
 		nl_loc = strcspn(symbol, "\n");
 		symbol[nl_loc] = '\0';
-		if ((strncmp(symbol, "Q", 1) == 0)
-		    || (strncmp(symbol, "q", 1) == 0)) {
+                for (int i = 0; symbol[i] != '\0'; ++i) {
+                        if (symbol[i] >= 'a' && symbol[i] <= 'z') {
+                                symbol[i] -= 32;
+                        }
+                }
+		if (strncmp(symbol, "Q", 1) == 0) {
+                        printf("\n\tExiting now. Goodbye\n");
 			exit(0);
 		} else {
 			for (int i = 0; i < MAX_NO_CO; ++i) {
@@ -90,12 +95,11 @@ void print_ticker(company co_list[])
 				if ((strncmp
 				     (co_list[i].symbol, symbol,
 				      sizeof(symbol)) == 0)) {
-					++j;
 					snprintf(co_to_print, MAX_CO_SIZE,
-						 "Search %d - %s: %s\n", j,
+						 "%s: %s\n",
 						 co_list[i].symbol,
 						 co_list[i].co_name);
-					printf("%s\n", co_to_print);
+                                        printf("\033[96m\t%s\033[0m\n\n", co_list[i].co_name);
 					co_found = true;
 					write_to(co_to_print);
 					break;
@@ -103,7 +107,7 @@ void print_ticker(company co_list[])
 			}
 			if (!co_found) {
 				printf
-				    ("No company found with provided symbol\n");
+				    ("\033[31m\033[1mNo company found with provided symbol\033[0m\n\n");
 			}
 		}
                 __fpurge(stdin);
