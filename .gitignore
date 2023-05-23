@@ -5,6 +5,7 @@
 tickers.pdf
 *.o
 tickers
+*.s
 
 # Ignore adocs
 *.adoc
