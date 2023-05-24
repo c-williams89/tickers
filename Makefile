@@ -22,6 +22,9 @@ all: $(BIN)
 money: $(BIN)
 	./$(BIN)
 
+debug: CFLAGS += -g3
+debug: $(BIN)
+
 clean: 
 	@rm -rf $(BIN) $(OBJ_DIR)
 	@rm $(DATA_DIR)/search_results

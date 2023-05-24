@@ -49,6 +49,11 @@ int main(void)
 
 long get_file_size(const char file[])
 {
+	/*
+	 * Gets and returns file size to use when reading entire file in main.
+	 * closes the file so the pointer is reset to beginning of file next
+	 * time it is opened.
+	 */
 	FILE *fp = fopen(file, "r");
 	if (!fp) {
 		perror("Could not open file: 'tickers.txt'\n");
@@ -62,6 +67,7 @@ long get_file_size(const char file[])
 
 void create_companies(char *curr_co, company * co_list)
 {
+	// Creates a single struct at respective co_list index
 	char *tmp;
 	tmp = strsep(&curr_co, ":");
 	strncpy(co_list->symbol, tmp, sizeof(co_list->symbol));
@@ -80,6 +86,8 @@ void print_ticker(company co_list[])
 		fgets(symbol, MAX_SYM_SIZE, stdin);
 		nl_loc = strcspn(symbol, "\n");
 		symbol[nl_loc] = '\0';
+
+		// loop to convert input to upper 
 		for (int i = 0; symbol[i] != '\0'; ++i) {
 			if (symbol[i] >= 'a' && symbol[i] <= 'z') {
 				symbol[i] -= 32;
@@ -87,7 +95,7 @@ void print_ticker(company co_list[])
 		}
 		if (strncmp(symbol, "Q", 1) == 0) {
 			printf("\n\tExiting now. Goodbye\n");
-			exit(0);
+			return;
 		} else {
 			for (int i = 0; i < MAX_NO_CO; ++i) {
 				co_found = false;
@@ -110,6 +118,7 @@ void print_ticker(company co_list[])
 				    ("\033[31m\033[1mNo company found with provided symbol\033[0m\n\n");
 			}
 		}
+		// used to clear stdin buffer for subsequent loops
 		__fpurge(stdin);
 	};
 }
