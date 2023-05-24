@@ -36,9 +36,10 @@ int main(void)
 		exit(1);
 	}
 	char curr_co[MAX_CO_SIZE];
-	int i = 0;
+	int i = 0, nl_loc = 0;
 	while (fgets(curr_co, file_size, fp)) {
-		curr_co[strlen(curr_co)] = '\0';
+		nl_loc = strcspn(curr_co, "\n");
+		curr_co[nl_loc] = '\0';
 		create_companies(curr_co, &co_list[i]);
 		i++;
 	}
