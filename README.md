@@ -38,7 +38,7 @@ After running the program, execute:
 ```sh
 <project_root_dir>$ make clean
 ```
-To delete object files as well as the `search_results` created in the `docs/` directory.
+To delete object files as well as the `search_results` created in the `data/` directory.
 
 ## Support
 Additional information can be found in the man page:
