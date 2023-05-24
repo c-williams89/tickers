@@ -7,7 +7,7 @@
 #define INPUT_FILE "./data/tickers.txt"
 #define OUTPUT_FILE "./data/search_results"
 
-enum { MAX_CO_SIZE = 64, MAX_SYM_SIZE = 8, MAX_NO_CO = 10 };
+enum { MAX_CO_SIZE = 64, MAX_SYM_SIZE = 8 };
 
 typedef struct company {
 	char symbol[5];
@@ -18,14 +18,12 @@ long get_file_size(const char[]);
 
 void create_companies(char *curr_co, company * co_list);
 
-void print_ticker(company co_list[]);
+void print_ticker(company co_list[], int no_cos);
 
 void write_to(char *co_to_print);
 
 int main(void)
 {
-	system("clear");
-	company co_list[MAX_NO_CO] = { 0 };
 	const char file[] = INPUT_FILE;
 	long file_size = get_file_size(file);
 
@@ -36,14 +34,24 @@ int main(void)
 		exit(1);
 	}
 	char curr_co[MAX_CO_SIZE];
-	int i = 0;
+        char line[MAX_CO_SIZE];
+	int i = 0, no_cos = 0;
+        
+        while (fgets(line, file_size, fp)) {
+                no_cos += 1;
+        }
+        fseek(fp, 0L, SEEK_SET);
+
+        company* co_list = calloc(no_cos, sizeof(*co_list));
+        
 	while (fgets(curr_co, file_size, fp)) {
 		curr_co[strlen(curr_co)] = '\0';
 		create_companies(curr_co, &co_list[i]);
 		i++;
 	}
 	fclose(fp);
-	print_ticker(co_list);
+	print_ticker(co_list, no_cos);
+        free(co_list);
 }
 
 long get_file_size(const char file[])
@@ -53,7 +61,7 @@ long get_file_size(const char file[])
 		perror("Could not open file: 'tickers.txt'\n");
 		exit(1);
 	}
-	fseek(fp, (long)0, SEEK_END);
+	fseek(fp, 0L, SEEK_END);
 	long file_size = ftell(fp);
 	fclose(fp);
 	return file_size;
@@ -68,7 +76,7 @@ void create_companies(char *curr_co, company * co_list)
 	strncpy(co_list->co_name, tmp, sizeof(co_list->co_name));
 }
 
-void print_ticker(company co_list[])
+void print_ticker(company co_list[], int no_cos)
 {
 	int nl_loc = 0;
 	char symbol[MAX_SYM_SIZE] = { 0 };
@@ -86,9 +94,10 @@ void print_ticker(company co_list[])
 		}
 		if (strncmp(symbol, "Q", 1) == 0) {
 			printf("\n\tExiting now. Goodbye\n");
+                        free(co_list);
 			exit(0);
 		} else {
-			for (int i = 0; i < MAX_NO_CO; ++i) {
+			for (int i = 0; i < no_cos; ++i) {
 				co_found = false;
 				if ((strncmp
 				     (co_list[i].symbol, symbol,

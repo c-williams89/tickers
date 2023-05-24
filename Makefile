@@ -19,6 +19,9 @@ BIN := ticker
 
 all: $(BIN)
 
+debug: CFLAGS += -g3
+debug: $(BIN)
+
 money: $(BIN)
 	./$(BIN)
 
