@@ -4,6 +4,8 @@
 #include <stdbool.h>
 #include <stdio_ext.h>
 #include "../include/print_tickers.h"
+#include "../include/create_companies.h"
+#include "../include/get_file_size.h"
 
 #define INPUT_FILE "./data/tickers.txt"
 
@@ -34,32 +36,4 @@ int main(void)
 	}
 	fclose(fp);
 	print_ticker(co_list);
-}
-
-long get_file_size(const char file[])
-{
-	/*
-	 * Gets and returns file size to use when reading entire file in main.
-	 * closes the file so the pointer is reset to beginning of file next
-	 * time it is opened.
-	 */
-	FILE *fp = fopen(file, "r");
-	if (!fp) {
-		perror("Could not open file: 'tickers.txt'\n");
-		exit(1);
-	}
-	fseek(fp, (long)0, SEEK_END);
-	long file_size = ftell(fp);
-	fclose(fp);
-	return file_size;
-}
-
-void create_companies(char *curr_co, company * co_list)
-{
-	// Creates a single struct at respective co_list index
-	char *tmp;
-	tmp = strsep(&curr_co, ":");
-	strncpy(co_list->symbol, tmp, sizeof(co_list->symbol));
-	tmp = strsep(&curr_co, "\n");
-	strncpy(co_list->co_name, tmp, sizeof(co_list->co_name));
 }
