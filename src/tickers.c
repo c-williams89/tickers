@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <stdbool.h>
-#include <stdio_ext.h>
 #include "../include/print_tickers.h"
 #include "../include/create_companies.h"
 #include "../include/get_file_size.h"
